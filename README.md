@@ -30,20 +30,20 @@ python simulation_oil_drilling.py
 
 
 ## Citation
-Please cite our paper if it helps your research (only arXiv for now):
+Please cite our paper if it helps your research:
 
-	@ARTICLE{2021arXiv210111557B,
-	       author = {{Bras}, Pierre},
-	        title = "{Convergence rates of Gibbs measures with degenerate minimum}",
-	      journal = {arXiv e-prints},
-	     keywords = {Mathematics - Probability},
-	         year = 2021,
-	        month = jan,
-	          eid = {arXiv:2101.11557},
-	        pages = {arXiv:2101.11557},
+	@ARTICLE{2022arXiv221212018B,
+		author = {{Bras}, Pierre},
+			title = "{Langevin algorithms for Markovian Neural Networks and Deep Stochastic control}",
+		journal = {arXiv e-prints},
+		keywords = {Quantitative Finance - Computational Finance, Computer Science - Machine Learning, Mathematics - Optimization and Control, Statistics - Machine Learning},
+			year = 2022,
+			month = dec,
+			eid = {arXiv:2212.12018},
+			pages = {arXiv:2212.12018},
 	archivePrefix = {arXiv},
-	       eprint = {2101.11557},
-	 primaryClass = {math.PR},
-	       adsurl = {https://ui.adsabs.harvard.edu/abs/2021arXiv210111557B},
-	      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+		eprint = {2212.12018},
+	primaryClass = {q-fin.CP},
+		adsurl = {https://ui.adsabs.harvard.edu/abs/2022arXiv221212018B},
+		adsnote = {Provided by the SAO/NASA Astrophysics Data System}
 	}
