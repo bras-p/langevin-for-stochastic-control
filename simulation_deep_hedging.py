@@ -44,7 +44,7 @@ model_builder = DeepHedging(
 
 
 exp_name = 'deep_hedging'
-base = './'
+base = './results/'
 
 # first get a dummy model to see the number of layers
 model = model_builder.getModel()
@@ -59,7 +59,7 @@ sigma_schedule = tf.keras.optimizers.schedules.PiecewiseConstantDecay(boundaries
 optimizers = [
     LAdam(learning_rate=lr_schedule, sigma=0.),
     LAdam(learning_rate=lr_schedule, sigma=sigma_schedule),
-    LayerLAdam(learning_rate=lr_schedule, sigma=sigma_schedule, langevin_layers=range(int(0.3*len(model.layers)))),
+    # LayerLAdam(learning_rate=lr_schedule, sigma=sigma_schedule, langevin_layers=range(int(0.3*len(model.layers)))),
 ]
 
 
@@ -85,7 +85,7 @@ experiment.plot()
 
 experiment.plot_traj(opt_index=1)
 
-experiment.save_data(exp_name +'_N{}'.format(N_euler))
-experiment.save_traj(exp_name)
+experiment.save_data(dir_name=exp_name +'_N{}'.format(N_euler))
+experiment.save_traj(dir_name=exp_name +'_N{}'.format(N_euler))
 
 

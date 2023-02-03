@@ -35,22 +35,22 @@ model_builder = OilDrilling(
 )
 
 exp_name = 'oil_drilling'
-base = './'
+base = './results/'
 
 # first get a dummy model to see the number of layers
 model = model_builder.getModel()
 
 EPOCHS = 100
-lr_0 = 0.05
+lr_0 = 2e-3
 epoch_change = 80
 lr_schedule = tf.keras.optimizers.schedules.PiecewiseConstantDecay(boundaries=[epoch_change*int(np.ceil(N_train/batch_size))], values=[lr_0, lr_0/10])
-sigma_0 = 5e-3
+sigma_0 = 1e-3
 sigma_schedule = tf.keras.optimizers.schedules.PiecewiseConstantDecay(boundaries=[epoch_change*int(np.ceil(N_train/batch_size))], values=[sigma_0, 0.])
 
 optimizers = [
     LAdam(learning_rate=lr_schedule, sigma=0.),
     LAdam(learning_rate=lr_schedule, sigma=sigma_schedule),
-    LayerLAdam(learning_rate=lr_schedule, sigma=sigma_schedule, langevin_layers=range(int(0.3*len(model.layers)))),
+    # LayerLAdam(learning_rate=lr_schedule, sigma=sigma_schedule, langevin_layers=range(int(0.3*len(model.layers)))),
 ]
 
 
@@ -77,6 +77,6 @@ experiment.plot()
 experiment.plot_traj(opt_index=1)
 
 
-experiment.save_data(exp_name +'_N{}'.format(N_euler))
-experiment.save_traj(exp_name)
+experiment.save_data(dir_name=exp_name +'_N{}'.format(N_euler))
+experiment.save_traj(dir_name=exp_name +'_N{}'.format(N_euler))
 

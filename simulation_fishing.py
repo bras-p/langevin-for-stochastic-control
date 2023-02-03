@@ -15,8 +15,8 @@ N_test=25*batch_size
 
 N_euler = 50
 dim = 5
-def get_X0(x):
-    return tf.clip_by_value(tf.random.normal(shape=tf.shape(x), mean=1., stddev=0.5), clip_value_min=0.2, clip_value_max=2.)
+def get_X0(shape):
+    return tf.clip_by_value(tf.random.normal(shape=shape, mean=1., stddev=0.5), clip_value_min=0.2, clip_value_max=2.)
 
 model_builder = Fishing(
     T=1.,
@@ -40,7 +40,7 @@ model_builder = Fishing(
     ctrl_hidden_units = [32,32],
 )
 
-base = './'
+base = './results/'
 exp_name = 'fishing'
 
 # first get a dummy model to see the number of layers
@@ -50,13 +50,13 @@ EPOCHS = 50
 lr_0 = 2e-3
 epoch_change = 40
 lr_schedule = tf.keras.optimizers.schedules.PiecewiseConstantDecay(boundaries=[epoch_change*int(np.ceil(N_train/batch_size))], values=[lr_0, lr_0/10])
-sigma_0 = 2e-3
+sigma_0 = 1e-3
 sigma_schedule = tf.keras.optimizers.schedules.PiecewiseConstantDecay(boundaries=[epoch_change*int(np.ceil(N_train/batch_size))], values=[sigma_0, 0.])
 
 optimizers = [
     LAdam(learning_rate=lr_schedule, sigma=0.),
     LAdam(learning_rate=lr_schedule, sigma=sigma_schedule),
-    LayerLAdam(learning_rate=lr_schedule, sigma=sigma_schedule, langevin_layers=range(int(0.3*len(model.layers)))),
+    # LayerLAdam(learning_rate=lr_schedule, sigma=sigma_schedule, langevin_layers=range(int(0.1*len(model.layers)))),
 ]
 
 
@@ -65,6 +65,7 @@ dataloader = DataLoaderFromMap(
     N_test = N_test,
     batch_size = batch_size,
     get_X0 = get_X0,
+    dim = dim,
 )
 
 experiment = Experiment(
@@ -82,6 +83,6 @@ experiment.plot()
 
 experiment.plot_traj(opt_index=1)
 
-experiment.save_data(exp_name +'_N{}'.format(N_euler))
-experiment.save_traj(exp_name)
+experiment.save_data(dir_name=exp_name +'_N{}'.format(N_euler))
+experiment.save_traj(dir_name=exp_name +'_N{}'.format(N_euler))
 

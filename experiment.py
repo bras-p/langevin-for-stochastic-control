@@ -117,16 +117,16 @@ class Experiment():
         plt.show()
 
 
-    def save_traj(self, file_name='trajectory'):
+    def save_traj(self, dir_name='trajectory'):
         if not hasattr(self, 'traj_example'):
             raise NameError('Must plot_traj first')
         traj = self.traj_example
         trajs = { 'f'+str(k): traj[k] for k in range(len(traj)) }
         trajs.update({'time':np.arange(len(traj[0]))})
         df = pd.DataFrame(trajs)
-        df.to_csv(self.base + file_name + '/' + 'traj_example' + '.csv')
+        df.to_csv(self.base + dir_name + '/' + 'traj_example' + '.csv')
 
-        f = open(self.base + file_name + '/' + 'traj_example_settings.txt', 'w+')
+        f = open(self.base + dir_name + '/' + 'traj_example_settings.txt', 'w+')
         f.write('Model: ' + type(self.model_builder).__name__+'\n')
         f.write('Model options: ' + str(self.model_builder.__dict__)+'\n')
         f.write('Dataloader: ' + self.dataloader.__class__.__name__ + '\n')
