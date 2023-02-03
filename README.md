@@ -20,6 +20,12 @@ pip install tensorflow
 pip install pandas
 ```
 
+Tensorflow version used:
+```
+tensorflow                   2.10.0
+```
+
+
 ## Training examples
 
 ```
