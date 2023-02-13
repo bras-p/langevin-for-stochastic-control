@@ -1,3 +1,13 @@
+Metadata-Version: 2.1
+Name: langevin-stochastic-control
+Version: 0.0.0
+Summary: A framework for comparing optimizers on Stochastic control problems, with an implementation of Langevin optimizers in TensorFlow
+Home-page: https://github.com/Bras-P/langevin-for-stochastic-control
+Author: Pierre Bras
+License: MIT
+Platform: UNKNOWN
+License-File: LICENCE.txt
+
 # [Langevin algorithms for Markovian Neural Networks and Deep Stochastic control](https://arxiv.org/abs/2212.12018)
 
 Stochastic Gradient Descent Langevin Dynamics (SGLD) algorithms, which add noise to the classic gradient descent, are known to improve the training of neural networks in some cases where the neural network is very deep.
@@ -35,9 +45,6 @@ python simulation_oil_drilling.py
 ```
 
 
-## Package
-The package <tt>langevin_optimizers</tt> gives Langevin optimizers as a instances of the <tt>tf.keras.optimizers.Optimizer</tt> base class. See the <tt>notebook.ipynb</tt> for more details.
-
 
 
 ## Citation
@@ -58,3 +65,4 @@ Please cite our paper if it helps your research:
 		adsurl = {https://ui.adsabs.harvard.edu/abs/2022arXiv221212018B},
 		adsnote = {Provided by the SAO/NASA Astrophysics Data System}
 	}
+

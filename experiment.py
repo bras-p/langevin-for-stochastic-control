@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from os import mkdir, listdir
 
-from optimizers.base import set_langevin
+from langevin_optimizers.base import set_langevin
 import utils
 
 

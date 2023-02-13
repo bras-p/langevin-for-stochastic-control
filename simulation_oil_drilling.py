@@ -4,9 +4,9 @@ import tensorflow as tf
 from models.oil_drilling import OilDrilling
 from experiment import Experiment
 from data.constant import ConstantLoader
-from optimizers.ladam import LAdam, LayerLAdam
-from optimizers.lrmsprop import LRMSprop, LayerLRMSprop
-from optimizers.ladadelta import LAdadelta, LayerLAdadelta
+from langevin_optimizers.ladam import LAdam, LayerLAdam
+from langevin_optimizers.lrmsprop import LRMSprop, LayerLRMSprop
+from langevin_optimizers.ladadelta import LAdadelta, LayerLAdadelta
 
 
 batch_size = 512
