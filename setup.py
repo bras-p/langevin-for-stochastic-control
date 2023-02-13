@@ -2,7 +2,11 @@ from setuptools import setup, find_packages
 
 setup(
     name='langevin-stochastic-control',
-    packages=find_packages(),
+    packages=[
+        "models",
+        "optimizers",
+        "data",
+    ],
     url='https://github.com/Bras-P/langevin-for-stochastic-control',
     author="Pierre Bras",
     description='A framework for comparing optimizers on Stochastic control problems, with an implementation of Langevin optimizers in TensorFlow',
