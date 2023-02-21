@@ -15,8 +15,11 @@ N_test=25*batch_size
 
 N_euler = 50
 dim = 5
-def get_X0(shape):
-    return tf.clip_by_value(tf.random.normal(shape=shape, mean=1., stddev=0.5), clip_value_min=0.2, clip_value_max=2.)
+def get_X0(batch_size):
+    return tf.clip_by_value(
+        tf.random.normal(shape=(batch_size, dim), mean=1., stddev=0.5),
+        clip_value_min=0.2, clip_value_max=2.
+    )
 
 model_builder = Fishing(
     T=1.,
@@ -65,7 +68,6 @@ dataloader = DataLoaderFromMap(
     N_test = N_test,
     batch_size = batch_size,
     get_X0 = get_X0,
-    dim = dim,
 )
 
 experiment = Experiment(
