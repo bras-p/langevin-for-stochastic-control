@@ -44,7 +44,7 @@ The package <tt>langevin_optimizers</tt> gives Langevin optimizers as a instance
 Please cite our paper if it helps your research:
 
 	@ARTICLE{2022arXiv221212018B,
-		author = {{Bras}, Pierre},
+		author = {{Bras}, Pierre and {Pag{\`e}s}, Gilles},
 			title = "{Langevin algorithms for Markovian Neural Networks and Deep Stochastic control}",
 		journal = {arXiv e-prints},
 		keywords = {Quantitative Finance - Computational Finance, Computer Science - Machine Learning, Mathematics - Optimization and Control, Statistics - Machine Learning},
@@ -52,6 +52,7 @@ Please cite our paper if it helps your research:
 			month = dec,
 			eid = {arXiv:2212.12018},
 			pages = {arXiv:2212.12018},
+			doi = {10.48550/arXiv.2212.12018},
 	archivePrefix = {arXiv},
 		eprint = {2212.12018},
 	primaryClass = {q-fin.CP},
