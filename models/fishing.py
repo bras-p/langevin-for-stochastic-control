@@ -41,6 +41,8 @@ class Fishing(ModelBuilder):
         batch_size = tf.shape(X_input)[0]
         if not self.multiple_ctrls:
             ctrl_model = self.getCtrlModel()
+        else:
+            ctrl_models = []
         J = tf.zeros((batch_size, 1))
         old_u = tf.zeros(tf.shape(X_input))
 
@@ -50,7 +52,9 @@ class Fishing(ModelBuilder):
             drift = self.h * X * (self.r - tf.matmul(X, self.kappa_t))
             noise = tf.sqrt(self.h) * X * tf.matmul(tf.random.normal(tf.shape(X)), self.sigma_t)
             if self.multiple_ctrls:
-                ctrl_value = self.getCtrlModel()(X)
+                new_ctrl_model = self.getCtrlModel()
+                ctrl_models.append(new_ctrl_model)
+                ctrl_value = new_ctrl_model(X)
             else:
                 ctrl_value = ctrl_model(tf.concat([X, k*self.h*tf.ones((batch_size, 1))], axis=1))
             u = self.u_m + (self.u_M - self.u_m)*ctrl_value
@@ -60,6 +64,11 @@ class Fishing(ModelBuilder):
             X_tab = tf.concat([X_tab, tf.concat([X,u], axis=1)], axis=1)
 
         model = tf.keras.Model(inputs=X_input, outputs=tf.concat([J,X_tab], axis=1))
+
+        if not self.multiple_ctrls:
+            model.ctrl_model = ctrl_model
+        else:
+            model.ctrl_models = ctrl_models
 
         return model
 

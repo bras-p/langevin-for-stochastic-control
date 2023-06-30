@@ -60,12 +60,16 @@ class OilDrilling(ModelBuilder):
         P_t = 1.*P_input
         if not self.multiple_ctrls:
             ctrl_model = self.getCtrlModel()
+        else:
+            ctrl_models = []
 
         X_tab = tf.concat([P_t, E_t, S_t], axis=1)
 
         for k in range(self.N_euler):
             if self.multiple_ctrls:
-                q_t = self.getCtrlModel()(tf.concat([P_t, E_t, S_t], axis=1))
+                new_ctrl_model = self.getCtrlModel()
+                ctrl_models.append(new_ctrl_model)
+                q_t = new_ctrl_model()(tf.concat([P_t, E_t, S_t], axis=1))
             else:
                 q_t = ctrl_model(tf.concat([P_t, E_t, S_t, k*self.h*tf.ones((batch_size, 1))], axis=1))
             q_t = self.apply_constraints(q_t, S_t)
@@ -83,6 +87,12 @@ class OilDrilling(ModelBuilder):
         J = J - tf.exp(-self.rho*self.N_euler*self.h) * self.U((1.-self.epsilon)*P_t*S_t) # at the end we sell all of our stock
 
         model = tf.keras.Model(inputs=P_input, outputs=tf.concat([J,X_tab], axis=1))
+
+        if not self.multiple_ctrls:
+            model.ctrl_model = ctrl_model
+        else:
+            model.ctrl_models = ctrl_models
+
         return model
 
 

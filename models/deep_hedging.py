@@ -57,13 +57,17 @@ class DeepHedging(ModelBuilder):
 
         if not self.multiple_ctrls:
             ctrl_model = self.getCtrlModel()
+        else:
+            ctrl_models = []
 
         for k in range(self.N_euler):
             S1_old = 1.*S1
             S2_old = 1.*S2
             delta_old = 1.*delta
             if self.multiple_ctrls:
-                delta = self.getCtrlModel()(tf.concat([tf.math.log(S1), V, delta_old], axis=1))
+                new_ctrl_model = self.getCtrlModel()
+                ctrl_models.append(new_ctrl_model)
+                delta = new_ctrl_model(tf.concat([tf.math.log(S1), V, delta_old], axis=1))
             else:
                 delta = ctrl_model(tf.concat([tf.math.log(S1), V, delta_old, k*self.h*tf.ones((batch_size,1))], axis=1))
             transaction_cost = transaction_cost + tf.reduce_sum(
@@ -95,5 +99,11 @@ class DeepHedging(ModelBuilder):
         # J = tf.exp(lmbd*(Z - benefits + transaction_cost))
 
         model = tf.keras.Model(inputs=[S1_input, V_input], outputs=tf.concat([J,X_tab],axis=1))
+
+        if not self.multiple_ctrls:
+            model.ctrl_model = ctrl_model
+        else:
+            model.ctrl_models = ctrl_models
+
         return model
 
